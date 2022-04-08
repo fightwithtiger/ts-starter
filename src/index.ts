@@ -1,3 +1,8 @@
+import { canvas, ctx } from './packages'
+
 export function useCanvas() {
-  return 'useCanvas'
+  return {
+    canvas,
+    ctx,
+  }
 }
