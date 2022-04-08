@@ -40,6 +40,7 @@
   "scripts": {
     "build": "rimraf dist && unbuild",
     "dev": "unbuild --stub",
+    "play": "vite playground",
     "lint": "eslint .",
     "prepublishOnly": "nr build",
     "release": "bumpp --commit --push --tag && pnpm publish",
