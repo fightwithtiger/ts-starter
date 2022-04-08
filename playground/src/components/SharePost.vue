@@ -36,12 +36,19 @@ onMounted(() => {
     width: 400,
     height: 160,
   }
-  ctx.drawLines([p1, p2, p3])
-  ctx.drawFillRect(r, {
-    fillStyle: '#c1c1c1',
-  })
-  ctx.drawStrokeRect(r2, {
-    strokeStyle: '#555555',
+  ctx.drawLines([p1, p2, p3, p1])
+  // ctx.drawFillRect(r, {
+  //   fillStyle: '#c1c1c1',
+  // })
+  // ctx.drawStrokeRect(r2, {
+  //   strokeStyle: '#555555',
+  // })
+
+  ctx.drawText('你好，欢迎来到米奇妙妙屋', p2, {
+    font: '24px serif',
+    fillStyle: '#244477',
+  }, {
+    maxWidth: 30,
   })
 })
 </script>

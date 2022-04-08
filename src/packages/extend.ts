@@ -1,10 +1,12 @@
-import type { CanvasRenderingContext2DPlus, PatternOps } from '../types'
+import type { CanvasRenderingContext2DPlus } from '../types'
 import patternOps from './pattern'
+import textOps from './text'
 import { createPatternOpsHandler } from './handler'
 
 export function enhance(ctx: CanvasRenderingContext2D): CanvasRenderingContext2DPlus {
-  for (const key in patternOps) {
-    const fn = patternOps[key as keyof PatternOps]
+  const operations = { ...patternOps, ...textOps }
+  for (const key in operations) {
+    const fn = operations[key as keyof typeof operations]
     const collectionHandler = createPatternOpsHandler(fn)
     proxy(ctx, key, collectionHandler)
   }
