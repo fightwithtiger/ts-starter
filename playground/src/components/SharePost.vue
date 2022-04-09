@@ -1,5 +1,6 @@
 <template>
-  <div id="container" class="container"></div>
+  <div id="container" class="container">
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -36,19 +37,23 @@ onMounted(() => {
     width: 400,
     height: 160,
   }
+
   ctx.drawLines([p1, p2, p3, p1])
-  // ctx.drawFillRect(r, {
-  //   fillStyle: '#c1c1c1',
-  // })
-  // ctx.drawStrokeRect(r2, {
-  //   strokeStyle: '#555555',
-  // })
+  ctx.drawFillRect(r, {
+    fillStyle: '#c1c1c1',
+  })
+  ctx.drawStrokeRect(r2, {
+    strokeStyle: '#555555',
+  })
 
   ctx.drawText('你好，欢迎来到米奇妙妙屋', p2, {
     font: '24px serif',
     fillStyle: '#244477',
   }, {
-    maxWidth: 30,
+    maxWidth: 50,
+  })
+  ctx.drawImg(p1, {
+    url: 'https://mdn.mozillademos.org/files/5395/backdrop.png',
   })
 })
 </script>
