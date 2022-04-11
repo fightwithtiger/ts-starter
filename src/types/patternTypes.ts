@@ -13,9 +13,3 @@ export interface Rectangle {
 }
 
 export type PatternOps = typeof patternOps
-
-export interface BaseOptions extends CanvasFillStrokeStyles, CanvasPathDrawingStyles, CanvasShadowStyles, CanvasTextDrawingStyles {
-
-}
-
-export type Options = Partial<BaseOptions>

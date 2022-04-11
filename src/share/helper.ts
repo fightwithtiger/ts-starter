@@ -1,4 +1,4 @@
-import type { CanvasRenderingContext2DPlus, ImageOptions, ImageSourceType, Point, TextConfig, TextMode } from '../types'
+import type { CanvasRenderingContext2DPlus, ImageOptions, ImageSourceType, Point, TextConfig, TextItem, TextMode } from '../types'
 
 export function mergeOptions<T>(ctx: CanvasRenderingContext2DPlus, options: T) {
   for (const key in options)
@@ -18,11 +18,34 @@ export function connect(ctx: CanvasRenderingContext2DPlus, p1: Point, p2: Point)
   ctx.closePath()
 }
 
+export function drawTextItem(ctx: CanvasRenderingContext2DPlus, text: TextItem, originalPoint: Point, config?: TextConfig): Point {
+  const { content, point, options } = text
+  let p = {
+    x: 0,
+    y: 0,
+  }
+
+  ctx.save()
+  options && mergeOptions(ctx, options)
+  if (!config?.maxWidth)
+    p = drawLongText(ctx, String(content), point, config?.mode)
+  else
+    p = drawWords(ctx, String(content), point, originalPoint, config)
+  ctx.restore()
+
+  return p
+}
+
 export function drawLongText(ctx: CanvasRenderingContext2DPlus, content: string, p: Point, mode?: TextMode) {
+  const metrics = ctx.measureText(content)
   if (mode === 'stroke')
     drawStrokeText(ctx, content, p)
   else
     drawFillText(ctx, content, p)
+  return {
+    x: p.x + metrics.width,
+    y: p.y,
+  }
 }
 
 export function drawFillText(ctx: CanvasRenderingContext2DPlus, content: string, p: Point) {
@@ -33,9 +56,11 @@ export function drawStrokeText(ctx: CanvasRenderingContext2DPlus, content: strin
   ctx.strokeText(content, p.x, p.y)
 }
 
-export function drawWords(ctx: CanvasRenderingContext2DPlus, words: string, p: Point, config: TextConfig) {
+export function drawWords(ctx: CanvasRenderingContext2DPlus, words: string, p: Point, originalPoint: Point, config: TextConfig): Point {
   let left = p.x
   let top = p.y
+  const originalX = originalPoint.x
+
   const maxWidth = config.maxWidth ?? Infinity
   const mode = config.mode ?? 'fill'
 
@@ -51,12 +76,16 @@ export function drawWords(ctx: CanvasRenderingContext2DPlus, words: string, p: P
       y: top,
     }
     left += metrics.width
-    if (left - p.x >= maxWidth) {
+    if (left - originalX >= maxWidth) {
       // 换行
-      left = p.x
-      top += fontHeight
+      left = originalX
+      top += config.lineHeight ?? fontHeight
     }
     drawWord(ctx, words[i], point, mode)
+  }
+  return {
+    x: left,
+    y: top,
   }
 }
 

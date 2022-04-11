@@ -1,15 +1,8 @@
-# [name]
+# 启动
+npm i 或者pnpm i
+npm run play / pnpm run play
 
-[![NPM version](https://img.shields.io/npm/v/[name]?color=a1b858&label=)](https://www.npmjs.com/package/[name])
+# 文件
+src目录下是useCanvas 的核心代码
 
-## Sponsors
-
-<p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
-  </a>
-</p>
-
-## License
-
-[MIT](./LICENSE) License © 2021 [Anthony Fu](https://github.com/antfu)
+playground目录下则是运行demo的项目文件，测试api都在playground/components/SharePost.vue

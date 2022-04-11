@@ -9,3 +9,9 @@ export type CanvasRenderingContext2DPlus = CanvasRenderingContext2D & {
 } & {
   [key in keyof ImageOps]: ImageOps[key]
 }
+
+export interface BaseOptions extends CanvasFillStrokeStyles, CanvasPathDrawingStyles, CanvasShadowStyles, CanvasTextDrawingStyles {
+
+}
+
+export type Options = Partial<BaseOptions>

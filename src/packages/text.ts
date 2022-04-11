@@ -1,16 +1,19 @@
-import type { CanvasRenderingContext2DPlus, Options, Point, TextConfig } from '../types'
-import { drawLongText, drawWords, mergeOptions } from '../share'
+import type { CanvasRenderingContext2DPlus, TextConfig, TextItem } from '../types'
+import { drawTextItem } from '../share'
 
-function drawText(this: CanvasRenderingContext2DPlus, content: string | number, p: Point, options?: Options, config?: TextConfig) {
-  content = String(content)
+function drawText(this: CanvasRenderingContext2DPlus, text: TextItem | TextItem[], config?: TextConfig) {
+  text = JSON.parse(JSON.stringify(text))
 
-  this.save()
-  options && mergeOptions(this, options)
-  if (!config?.maxWidth)
-    drawLongText(this, content, p, config?.mode)
-  else
-    drawWords(this, content, p, config)
-  this.restore()
+  if (Array.isArray(text)) {
+    let prePoint = text[0].point ?? { x: 0, y: 0 }
+    text.forEach((item) => {
+      item.point = prePoint
+      prePoint = drawTextItem(this, item, (text as TextItem[])[0].point, config)
+    })
+  }
+  else {
+    drawTextItem(this, text, text.point, config)
+  }
 }
 
 const textOps = {
