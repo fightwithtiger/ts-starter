@@ -5,7 +5,8 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { useCanvas } from '../../../src/index'
+// import { useCanvas } from '../../../src/index'
+import { useCanvas } from '../../../dist/index'
 
 const { canvas, ctx } = useCanvas()
 
