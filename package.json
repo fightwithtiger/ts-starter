@@ -45,7 +45,8 @@
     "release": "bumpp --commit --push --tag && pnpm publish",
     "start": "esno src/index.ts",
     "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "play": "vite playground"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.18.9",
